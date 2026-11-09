@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>学生26-27-1评教 · 教师评分表</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f4f6f9;--card:#fff;--line:#d5dbe3;--ink:#111827;--muted:#6b7280;
+  --p90:#c62828;--p80:#e8620c;--p70:#9a7200;--p60:#1565c0;--p50:#5b6b7d;
+  --brand:#1e4d8c;
+}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);padding-bottom:96px}
+.wrap{max-width:1000px;margin:0 auto;padding:12px 10px 20px}
+.head{background:linear-gradient(135deg,#1e4d8c,#2f6fb8);color:#fff;border-radius:14px;padding:16px 14px 14px;position:relative;overflow:hidden}
+.head h1{font-size:22px;margin:0 0 6px;letter-spacing:.5px}
+.head .sub{font-size:13px;opacity:.92;line-height:1.5}
+.ver{display:inline-block;margin-top:9px;font-size:12px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);padding:3px 9px;border-radius:999px;letter-spacing:.4px}
+.card{background:var(--card);border-radius:12px;padding:12px;margin-top:12px;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+.card h2{font-size:15px;margin:0 0 8px;color:var(--brand)}
+.steps{margin:0;padding-left:18px;font-size:13.5px;line-height:1.75;color:#374151}
+.steps b{color:#111}
+.legend{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.legend span{font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);background:#fafbfc}
+.legend i{font-style:normal;font-weight:700;margin-right:3px}
+.l90{color:var(--p90)}.l80{color:var(--p80)}.l70{color:var(--p70)}.l60{color:var(--p60)}.l50{color:var(--p50)}
+.notice{font-size:12.5px;color:#8a5a00;background:#fff8e8;border:1px solid #f0dcae;border-radius:9px;padding:8px 10px;line-height:1.6;margin-top:10px}
+.tablebox{overflow-x:auto;background:#fff;border-radius:12px;margin-top:12px;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+table{border-collapse:separate;border-spacing:0;width:100%;table-layout:fixed}
+th,td{border-bottom:1px solid #e6ebf1;text-align:center;padding:6px 2px;font-size:15px;vertical-align:middle}
+thead th{position:sticky;top:0;background:#eef4fb;color:#123;z-index:3;font-weight:700;font-size:12.5px;border-bottom:2px solid #c9d8ea;line-height:1.25}
+thead th .pt{display:block;font-size:13.5px;font-weight:800}
+thead th .tag{display:block;font-size:10px;font-weight:600;opacity:.85}
+tbody tr:last-child td{border-bottom:0}
+td.grp{font-weight:700;background:#f5f9ff;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:3px;font-size:12.5px;padding:2px 0;width:26px;color:#123c6b}
+#tb th:nth-child(1){width:26px}
+#tb th:nth-child(2){width:30px}
+#tb th:nth-child(3){width:92px;white-space:nowrap}
+@media(max-width:600px){#tb th:nth-child(1){width:24px}#tb th:nth-child(2){width:26px}#tb th:nth-child(3){width:84px}}
+td.idx{color:#94a3b8;font-size:12.5px;width:26px}
+td.nm{font-weight:600;text-align:left;padding-left:8px;width:auto;white-space:nowrap;font-size:15.5px}
+.cell{width:100%;padding:0}
+.ck{width:100%;height:36px;border:0;background:transparent;cursor:pointer;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#c2cad4;transition:transform .08s}
+.ck:active{transform:scale(.9)}
+.ck .box{width:25px;height:25px;border:1.6px solid #ccd4de;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;transition:background .12s,border-color .12s}
+.ck .box svg{width:16px;height:16px;stroke:#fff;stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.6);transition:.12s}
+.ck[aria-pressed="true"]{background:#eef9f1}
+.ck[aria-pressed="true"] .box{background:currentColor;border-color:currentColor}
+.ck[aria-pressed="true"] .box svg{opacity:1;transform:scale(1)}
+.ck[data-v="90"]{--lv:#c62828}.ck[data-v="80"]{--lv:#e8620c}.ck[data-v="70"]{--lv:#9a7200}.ck[data-v="60"]{--lv:#1565c0}.ck[data-v="50"]{--lv:#5b6b7d}
+.ck[aria-pressed="true"]{color:var(--lv)}
+th.c90{color:var(--p90)}th.c80{color:var(--p80)}th.c70{color:var(--p70)}th.c60{color:var(--p60)}th.c50{color:var(--p50)}
+
+.sum{margin-top:12px;background:#fff;border-radius:12px;padding:6px 10px 8px;box-shadow:0 1px 3px rgba(16,24,40,.06)}
+.sum h2{font-size:15px;margin:8px 2px 6px;color:var(--brand);display:flex;justify-content:space-between;align-items:baseline}
+.sum h2 small{font-weight:400;color:var(--muted);font-size:11.5px}
+.srow{display:grid;grid-template-columns:58px 1fr 1fr 74px;gap:6px;align-items:center;padding:6px 0;border-top:1px dashed #e8edf3}
+.srow:first-of-type{border-top:0}
+.srow .lv{font-weight:800;font-size:15px;text-align:center}
+.srow .cnt{font-size:13px;font-weight:700;text-align:center}
+.srow .bar{height:9px;background:#eef1f5;border-radius:6px;overflow:hidden;position:relative}
+.srow .bar i{display:block;height:100%;width:0;border-radius:6px;transition:width .25s}
+.srow .who{font-size:12px;font-weight:600;border:1px solid var(--line);background:#fbfcfd;border-radius:8px;padding:6px 2px;cursor:pointer;color:#374151}
+.namelist{display:none;grid-column:1/-1;font-size:12.5px;line-height:1.6;background:#f8fafc;border:1px solid #e6ebf1;border-radius:8px;padding:7px 9px;color:#374151}
+.barwrap{display:flex;flex-direction:column;gap:3px}
+.barwrap em{font-style:normal;font-size:11px;color:var(--muted);text-align:right}
+
+.foot{text-align:center;font-size:12px;color:#8b95a3;padding:16px 0 6px;line-height:1.7}
+.dock{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid #e3e8ef;padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:flex;gap:8px;align-items:center;z-index:20;max-width:1000px;margin:0 auto}
+.dock .prog{flex:1;min-width:0}
+.dock .prog b{font-size:14px}
+.dock .prog small{display:block;font-size:11px;color:var(--muted);margin-top:2px}
+.dock .track{height:5px;background:#e9edf3;border-radius:4px;margin-top:5px;overflow:hidden}
+.dock .track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6fb8,#38b06a);border-radius:4px;transition:width .25s}
+.btn{border:0;border-radius:10px;padding:11px 14px;font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn.main{background:#1e4d8c;color:#fff;box-shadow:0 2px 8px rgba(30,77,140,.28)}
+.btn.ghost{background:#eef2f7;color:#28374a;border:1px solid #dde4ec}
+.btn.wide{width:100%;padding:13px}
+
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:60;display:none;padding:14px;overflow:auto}
+.modal.on{display:block}
+.sheet{background:#fff;border-radius:16px;max-width:760px;margin:14px auto;padding:16px}
+.sheet h3{margin:0 26px 4px 0;font-size:17px;color:var(--brand)}
+.xclose{position:absolute;top:10px;right:10px;width:32px;height:32px;border:0;border-radius:50%;background:#eef2f7;color:#4b5a6b;font-size:19px;line-height:1;cursor:pointer}
+.sheet{position:relative}
+.sheet .tip{font-size:12.5px;color:var(--muted);line-height:1.6;margin:4px 0 10px}
+textarea{width:100%;border:1px solid #d7dee7;border-radius:10px;padding:10px;font-size:12.5px;line-height:1.65;font-family:ui-monospace,Menlo,Consolas,monospace;background:#fbfcfe;resize:vertical;color:#111}
+#receiptText{height:240px;min-height:240px;overflow:auto}
+#pasteBox{height:150px}
+.row2{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.row2 .btn{flex:1;min-width:100px;font-size:13px;padding-left:6px;padding-right:6px}
+.msg{font-size:12.5px;margin-top:8px;padding:8px 10px;border-radius:8px;display:none;line-height:1.6}
+.msg.ok{display:block;background:#eafaf0;border:1px solid #a9dfc0;color:#12633a}
+.msg.warn{display:block;background:#fff7e6;border:1px solid #f0d8a8;color:#8a5a00}
+.hintswipe{font-size:11.5px;color:#8b95a3;text-align:center;margin-top:10px}
+.adv{margin-top:10px;border:1px dashed #dbe2ea;border-radius:10px;padding:6px 10px;background:#fbfcfe}
+.adv summary{font-size:12.5px;color:#4b5a6b;cursor:pointer;font-weight:600;padding:3px 0}
+.adv textarea{height:90px;margin-top:2px}
+.res{margin-top:12px;overflow:auto;max-height:52vh;border:1px solid #e6ebf1;border-radius:10px}
+.res table{min-width:640px}
+.res th,.res td{font-size:12px;padding:5px 4px;border-bottom:1px solid #eef1f5}
+.res thead th{background:#eef4fb}
+.res tr.top1 td{background:#fffaf0}
+.res td.n{text-align:left;white-space:nowrap;font-weight:600}
+.gate{position:fixed;inset:0;z-index:90;background:linear-gradient(160deg,#163d70,#2f6fb8 55%,#2f9c68);display:flex;align-items:center;justify-content:center;padding:18px}
+.gate.off{display:none}
+.gatecard{background:#fff;border-radius:18px;padding:24px 18px 18px;max-width:390px;width:100%;box-shadow:0 16px 44px rgba(0,0,0,.28)}
+.gatecard h2{margin:0 0 4px;font-size:20px;color:#1e4d8c;text-align:center}
+.gatecard .gsub{text-align:center;font-size:12.5px;color:#6b7280;margin:0 0 18px}
+.gatecard .glabel{display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:8px}
+.gatecard input{width:100%;font-size:24px;letter-spacing:8px;text-align:center;text-transform:uppercase;padding:13px 6px;border:1.6px solid #cfd8e3;border-radius:12px;font-family:ui-monospace,Menlo,Consolas,monospace;outline:none;color:#111}
+.gatecard input:focus{border-color:#2f6fb8;box-shadow:0 0 0 3px rgba(47,111,184,.14)}
+.gatecard .btn{margin-top:12px}
+.gnote{font-size:11.5px;color:#8b95a3;line-height:1.65;margin:12px 0 0;text-align:center}
+#codeTag{margin-left:6px}
+@media(max-width:600px){
+  .head h1{font-size:19px}
+  th,td{font-size:13px}
+  td.nm{font-size:14px;padding-left:6px}
+  thead th{font-size:11px}
+  thead th .pt{font-size:12.5px}
+  .ck{font-size:20px;height:34px}
+  td.grp{width:22px;font-size:11px;letter-spacing:1px}
+  .srow{grid-template-columns:50px 1fr 1fr 66px;gap:4px}
+  .srow .lv{font-size:13.5px}
+  .srow .cnt{font-size:12px}
+  .btn{padding:10px 12px;font-size:13px}
+  .wrap{padding:8px 6px 16px}
+}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gatecard">
+    <h2>学生26-27-1评教</h2>
+    <div class="gsub">教师课堂教学与表现评分 · 不记名 · V1.1</div>
+    <div class="gsub" style="margin-top:2px;color:#9aa6b5;font-size:12px">学生输 5 位邀请码　｜　老师输教师口令进入汇总</div>
+    <label class="glabel" for="gateInput">请输入老师发给你的 5 位邀请码</label>
+    <input id="gateInput" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABC12">
+    <button class="btn main wide" id="gateBtn">进入评教</button>
+    <div class="msg" id="gateMsg"></div>
+    <p class="gnote">一人一码、一码一票，码提交一次即失效。<br>若提示“邀请码不正确”，请向老师索取，不要自行编号。</p>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="head">
+    <h1>学生26-27-1评教</h1>
+    <div class="sub">教师课堂教学与表现评分表 · 不记名 · 30 秒勾选完成</div>
+    <div class="ver">版本号：V1.1 · 261109</div><span class="ver" id="codeTag">邀请码：—</span>
+  </div>
+
+  <div class="card">
+    <h2>怎么打分（三步）</h2>
+    <ol class="steps">
+      <li>输入老师私发给你的<b>5 位邀请码</b>，进入打分页（一码一票，用一次即失效）。</li>
+      <li>在每位老师后面<b>只勾选一个</b>等级（90 / 80 / 70 / 60 / 50），再点一次可取消。</li>
+      <li>39 位老师勾完后，点右下角<b>「生成文字回执」</b>，把回执<b>整段复制</b>发回给老师，<b>不用写姓名</b>。</li>
+    </ol>
+    <div class="legend">
+      <span><i class="l90">90</i>优秀</span>
+      <span><i class="l80">80</i>良好</span>
+      <span><i class="l70">70</i>中</span>
+      <span><i class="l60">60</i>合格</span>
+      <span><i class="l50">50</i>待改进</span>
+    </div>
+    <div class="notice">本页<b>不联网、不收集姓名/学号/手机号</b>，勾选结果只存在你的浏览器里。回执内嵌<b>你的邀请码</b>，只用于核销“一人一票”，与个人身份无关。<br>⚠️ 请勿把链接或邀请码转发给他人：码被别人先用，你自己的票就作废了。</div>
+  </div>
+
+  <div class="tablebox">
+    <table id="tb">
+      <thead>
+        <tr>
+          <th>组</th><th>序</th><th style="text-align:left;padding-left:8px">教师姓名</th>
+          <th class="c90"><span class="pt">90</span><span class="tag">优秀</span></th>
+          <th class="c80"><span class="pt">80</span><span class="tag">良好</span></th>
+          <th class="c70"><span class="pt">70</span><span class="tag">中</span></th>
+          <th class="c60"><span class="pt">60</span><span class="tag">合格</span></th>
+          <th class="c50"><span class="pt">50</span><span class="tag">待改进</span></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="sum">
+    <h2>五项汇总 <small>当前已勾选情况</small></h2>
+    <div id="sumRows"></div>
+  </div>
+
+  <div class="foot">
+    学生26-27-1评教 · 版本 V1.0（261109）<br>
+    汇总规则：每位教师得分 = 全部有效回执的平均分（Σ 等级分 ÷ 有效票数），按总分从高到低排名。
+  </div>
+</div>
+
+<div class="dock">
+  <div class="prog">
+    <b id="progText">已评 0 / 39</b>
+    <div class="track"><i id="progBar"></i></div>
+  </div>
+  <button class="btn ghost" id="btnSum">汇总</button>
+  <button class="btn main" id="btnReceipt">生成文字回执</button>
+</div>
+
+<!-- 回执弹窗 -->
+<div class="modal" id="mReceipt">
+  <div class="sheet">
+    <button class="xclose" id="btnCloseReceipt" aria-label="关闭">×</button>
+    <h3>文字回执（不记名）</h3>
+    <div class="tip">下面这段文字就是你的“票”。请<b>整段复制</b>发给汇总人（微信/QQ 都行），对方粘贴后即可自动汇总。无需署名。</div>
+    <textarea id="receiptText" readonly></textarea>
+    <div class="row2">
+      <button class="btn main" id="btnCopy">复制回执</button>
+      <button class="btn ghost" id="btnDownTxt">下载 .txt</button>
+    </div>
+    <div class="msg" id="msgCopy"></div>
+  </div>
+</div>
+
+<!-- 汇总弹窗 -->
+<div class="modal" id="mSum">
+  <div class="sheet">
+    <button class="xclose" id="btnCloseSum" aria-label="关闭">×</button>
+    <h3>汇总（汇总人使用）</h3>
+    <div class="tip">把收到的<b>全部回执文字</b>一次性粘贴到下面（可含聊天文字，系统自动识别回执码）。<b>同一个邀请码只算一票</b>，重复粘贴自动合并。然后点「开始汇总」。</div>
+    <textarea id="pasteBox" placeholder="在此粘贴所有学生发来的回执……"></textarea>
+    <div class="row2">
+      <button class="btn main" id="btnCalc">开始汇总</button>
+      <button class="btn ghost" id="btnGen" style="display:none">生成邀请码</button>
+      <button class="btn ghost" id="btnClear">清空</button>
+    </div>
+    <details class="adv" id="advBox">
+      <summary>高级：粘贴「有效邀请码清单」（剔除名单外的码）</summary>
+      <div class="tip" style="margin:6px 0 6px">把老师生成的邀请码粘进来（换行/逗号/空格分隔均可）。填了清单后，<b>不在清单里的码一律不计分</b>；不填则只做一码一票去重。</div>
+      <textarea id="allowBox" placeholder="ABC12&#10;K7M4Q&#10;…"></textarea>
+    </details>
+    <div class="msg" id="msgSum"></div>
+    <div class="row2" id="expRow" style="display:none">
+      <button class="btn ghost" id="btnCsv">导出汇总 CSV</button>
+      <button class="btn ghost" id="btnTsv">导出明细 TSV</button>
+    </div>
+    <div class="hintswipe" id="swipeTip" style="display:none">← 表格可左右滑动查看「各档票数 / 总得分 / 等级」→</div>
+    <div class="res" id="resBox" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+const TEACHERS = [{"g": "基础组", "n": "杨鸿"}, {"g": "基础组", "n": "易强文"}, {"g": "基础组", "n": "程露"}, {"g": "基础组", "n": "王晓丽"}, {"g": "基础组", "n": "柳德攀"}, {"g": "基础组", "n": "邢方凯"}, {"g": "基础组", "n": "徐倩"}, {"g": "基础组", "n": "耿红梅"}, {"g": "基础组", "n": "张军霞"}, {"g": "制冷组", "n": "朱彩兰"}, {"g": "制冷组", "n": "顾小颜"}, {"g": "制冷组", "n": "李晶"}, {"g": "制冷组", "n": "阮宸宇"}, {"g": "制冷组", "n": "张梓煜"}, {"g": "制冷组", "n": "王帅"}, {"g": "制冷组", "n": "邓建军"}, {"g": "轨道组", "n": "常锋"}, {"g": "轨道组", "n": "于向东"}, {"g": "轨道组", "n": "邢建姝"}, {"g": "轨道组", "n": "胡雪静"}, {"g": "轨道组", "n": "赵峰"}, {"g": "电商组", "n": "洪轩"}, {"g": "电商组", "n": "秦楠"}, {"g": "电商组", "n": "高伟"}, {"g": "电商组", "n": "李昀倩"}, {"g": "电商组", "n": "周静"}, {"g": "电商组", "n": "徐邦仪"}, {"g": "电商组", "n": "李美霖"}, {"g": "信息组", "n": "冯彦"}, {"g": "信息组", "n": "赵丰"}, {"g": "信息组", "n": "刘天一"}, {"g": "信息组", "n": "李晓菲"}, {"g": "信息组", "n": "刘晟典"}, {"g": "信息组", "n": "刘运琦"}, {"g": "信息组", "n": "贾宇鹏"}, {"g": "教务科", "n": "谢洪宾"}, {"g": "教务科", "n": "王东生"}, {"g": "教务科", "n": "董颖丽"}, {"g": "教务科", "n": "李旭"}];
+const LEVELS = [90,80,70,60,50];
+const VER = '2';
+const KEY = 'pj_26271_v1_scores';
+const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const CODE_KEY = 'pj_26271_invite';
+const TEACHER_PASS = 'T26PJ2026';   /* 教师口令：可自行修改，改完记得保密 */
+let scores = new Array(TEACHERS.length).fill(0);
+let myCode = '';
+
+/* ---------- 邀请码（一码一票） ---------- */
+function normCode(v){ return String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,''); }
+function sumIdx(str){
+  let sum=0;
+  for(let i=0;i<str.length;i++){
+    const k=CODE_CHARS.indexOf(str[i]);
+    if(k<0) return -1;
+    sum+=k;
+  }
+  return sum;
+}
+function validCode(c){
+  c=normCode(c);
+  if(c.length!==5) return false;
+  const sum=sumIdx(c.slice(0,4));
+  if(sum<0) return false;
+  return CODE_CHARS[sum%32]===c[4];
+}
+function randStr(n){
+  let r='';
+  for(let i=0;i<n;i++) r+=CODE_CHARS[Math.floor(Math.random()*CODE_CHARS.length)];
+  return r;
+}
+function genCode(){
+  const b=randStr(4);
+  return b+CODE_CHARS[sumIdx(b)%32];
+}
+
+/* ---------- 本地草稿 ---------- */
+try{ const s=JSON.parse(localStorage.getItem(KEY)||'[]'); if(Array.isArray(s)&&s.length===TEACHERS.length) scores=s.map(v=>LEVELS.includes(v)?v:0); }catch(e){}
+
+/* ---------- 入口（邀请码） ---------- */
+function applyCode(code){
+  myCode = code;
+  try{ localStorage.setItem(CODE_KEY, code); }catch(e){}
+  const tag=document.getElementById('codeTag');
+  if(tag) tag.textContent = '邀请码：' + code;
+  document.getElementById('gate').classList.add('off');
+  document.body.style.overflow='';
+}
+function applyTeacher(){
+  try{ localStorage.setItem(CODE_KEY, '#TEACHER'); }catch(e){}
+  document.documentElement.setAttribute('data-role','teacher');
+  const tag=document.getElementById('codeTag');
+  if(tag) tag.textContent = '教师模式';
+  document.getElementById('gate').classList.add('off');
+  const g=document.getElementById('btnGen'); if(g) g.style.display='';
+  document.body.style.overflow='';
+  open('mSum');
+}
+function gateError(t){
+  const m=document.getElementById('gateMsg');
+  m.className='msg warn'; m.textContent=t;
+}
+document.getElementById('gateBtn').addEventListener('click',function(){
+  const el=document.getElementById('gateInput');
+  const c=normCode(el.value);
+  el.value=c;
+  if(c===TEACHER_PASS){ applyTeacher(); return; }
+  if(!validCode(c)){ gateError('邀请码不正确（应为 5 位字母/数字，不含 0 O 1 I）。请向老师索取，不要自行编号。'); return; }
+  applyCode(c);
+});
+document.getElementById('gateInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter') document.getElementById('gateBtn').click();
+});
+document.getElementById('gateInput').addEventListener('input',function(){
+  this.value=normCode(this.value).slice(0,12);
+});
+(function initGate(){
+  const saved=localStorage.getItem(CODE_KEY)||'';
+  if(saved==='#TEACHER'){ applyTeacher(); }
+  else if(validCode(saved)){ applyCode(normCode(saved)); }
+  else { document.body.style.overflow='hidden'; }
+})();
+
+/* ---------- 渲染表格 ---------- */
+const tbody = document.querySelector('#tb tbody');
+(function buildTable(){
+  let i=0;
+  while(i<TEACHERS.length){
+    const g = TEACHERS[i].g;
+    let n=0; while(i+n<TEACHERS.length && TEACHERS[i+n].g===g) n++;
+    for(let j=0;j<n;j++){
+      const idx=i+j, t=TEACHERS[idx];
+      const tr=document.createElement('tr');
+      let html='';
+      if(j===0) html+='<td class="grp" rowspan="'+n+'">'+g+'</td>';
+      html+='<td class="idx">'+(idx+1)+'</td><td class="nm">'+t.n+'</td>';
+      LEVELS.forEach(function(v){
+        html+='<td class="cell"><button class="ck" type="button" data-i="'+idx+'" data-v="'+v+'" aria-pressed="false" aria-label="'+t.n+' '+v+'分"><span class="box"><svg viewBox="0 0 24 24"><path d="M4 12.6l5.2 5.2L20 6.6"/></svg></span></button></td>';
+      });
+      tr.innerHTML=html;
+      tbody.appendChild(tr);
+    }
+    i+=n;
+  }
+})();
+
+const btns=[].slice.call(document.querySelectorAll('.ck'));
+function paint(){
+  btns.forEach(function(b){
+    const on = scores[+b.dataset.i] === +b.dataset.v;
+    b.setAttribute('aria-pressed', on?'true':'false');
+  });
+}
+btns.forEach(function(b){
+  b.addEventListener('click',function(){
+    const i=+b.dataset.i, v=+b.dataset.v;
+    scores[i] = (scores[i]===v) ? 0 : v;
+    paint(); save(); stats();
+  });
+});
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(scores)); }catch(e){} }
+
+/* ---------- 进度 ---------- */
+function rated(){ return scores.filter(function(v){return v>0}).length; }
+function stats(){
+  const n=rated(), total=TEACHERS.length;
+  document.getElementById('progText').textContent='已评 '+n+' / '+total;
+  document.getElementById('progBar').style.width=(n/total*100)+'%';
+  LEVELS.forEach(function(v){
+    const cnt = scores.filter(function(x){return x===v}).length;
+    const el = document.getElementById('cnt'+v), bar=document.getElementById('bar'+v);
+    if(el) el.textContent = cnt+' 人 · '+(n?Math.round(cnt/n*100):0)+'%';
+    if(bar){ bar.style.width=(cnt/total*100)+'%'; bar.style.background=({90:'#c62828',80:'#e8620c',70:'#9a7200',60:'#1565c0',50:'#5b6b7d'})[v]; }
+    const list=document.getElementById('who'+v);
+    if(list){
+      const names = TEACHERS.map(function(t,i){return scores[i]===v?t.n:null}).filter(Boolean);
+      list.innerHTML = '<b>'+v+' 分（'+names.length+' 人）：</b>'+(names.length?names.join('、'):'暂无');
+    }
+  });
+}
+
+/* ---------- 五项汇总 ---------- */
+(function buildSum(){
+  const box=document.getElementById('sumRows');
+  box.innerHTML = LEVELS.map(function(v){
+    return '<div class="srow">'+
+      '<div class="lv" style="color:'+({90:'#c62828',80:'#e8620c',70:'#9a7200',60:'#1565c0',50:'#5b6b7d'})[v]+'">'+v+' 分</div>'+
+      '<div class="cnt" id="cnt'+v+'">0 人</div>'+
+      '<div class="barwrap"><div class="bar"><i id="bar'+v+'"></i></div></div>'+
+      '<button class="who" type="button" data-v="'+v+'">看名单</button>'+
+      '<div class="namelist" id="who'+v+'"></div>'+
+    '</div>';
+  }).join('');
+  box.querySelectorAll('.who').forEach(function(b){
+    b.addEventListener('click',function(){
+      const l=document.getElementById('who'+b.dataset.v);
+      l.style.display = (l.style.display==='block')?'none':'block';
+      b.textContent = (l.style.display==='block')?'收起':'看名单';
+    });
+  });
+})();
+
+/* ---------- 回执码 ---------- */
+function nonce(){
+  const s='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let r=''; for(let i=0;i<4;i++) r+=s[Math.floor(Math.random()*s.length)];
+  return r;
+}
+const CS='0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function makeCode(){
+  const vals = scores.map(function(v){return v? v/10-4 : 0});
+  while(vals.length%2) vals.push(0);
+  let body='';
+  for(let i=0;i<vals.length;i+=2){ body += CS[vals[i]*6+vals[i+1]]; }
+  const chk = CS[vals.reduce(function(a,b){return a+b},0)%36];
+  return 'JX'+VER+'-'+body+'-'+chk+'-'+(myCode||genCode())+'-'+nonce();
+}
+/* 解码：返回 null 表示校验不通过 */
+function decodeCode(body, chk){
+  const vals=[];
+  for(let i=0;i<body.length;i++){
+    const k=CS.indexOf(body[i]);
+    if(k<0) return null;
+    vals.push(Math.floor(k/6), k%6);
+  }
+  if(vals.length < TEACHERS.length) return null;
+  const v = vals.slice(0, TEACHERS.length);
+  const sum = v.reduce(function(a,b){return a+b},0);
+  if(CS[sum%36] !== chk) return null;
+  return v;
+}
+function receiptText(code){
+  const n=rated(), miss=TEACHERS.length-n;
+  return [
+    '【学生26-27-1评教 · 文字回执】',
+    '版本号：V1.1 · 261109',
+    '邀请码：'+(myCode||'—'),
+    '回执码：'+code,
+    '已评教师：'+n+' / '+TEACHERS.length+' 位'+(miss>0?('（未评 '+miss+' 位不计分）'):''),
+    '评分：90优秀 80良好 70中 60合格 50待改进',
+    '用法：整段复制发给老师（无需署名）；老师打开同一网页→「汇总」→粘贴全部回执，即可自动统计。',
+    '※ 本回执不含姓名/学号；一码一票，请勿转发他人。'
+  ].join('\n');
+}
+
+/* ---------- 弹窗 ---------- */
+function open(id){ document.getElementById(id).classList.add('on'); document.body.style.overflow='hidden'; }
+function close(id){ document.getElementById(id).classList.remove('on'); document.body.style.overflow=''; }
+let curCode='';
+
+document.getElementById('btnReceipt').addEventListener('click',function(){
+  const miss=TEACHERS.length-rated();
+  if(miss>0 && !confirm('还有 '+miss+' 位老师未评分。\n未评的老师将按“未评”处理、不计入统计。\n确定现在生成回执吗？')){
+    return;
+  }
+  curCode = makeCode();
+  const ta=document.getElementById('receiptText');
+  ta.value = receiptText(curCode);
+  ta.style.height='auto';
+  ta.style.height=Math.min(Math.max(ta.scrollHeight+6,240),Math.max(window.innerHeight-300,240))+'px';
+  document.getElementById('msgCopy').className='msg';
+  open('mReceipt');
+});
+document.getElementById('btnCloseReceipt').addEventListener('click',function(){ close('mReceipt'); });
+document.getElementById('btnCopy').addEventListener('click',function(){
+  const ta=document.getElementById('receiptText');
+  const txt=ta.value;
+  const done=function(){
+    const m=document.getElementById('msgCopy');
+    m.className='msg ok'; m.textContent='已复制。切到微信/QQ，长按输入框粘贴发送即可。';
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(function(){ ta.select(); document.execCommand('copy'); done(); });
+  }else{
+    ta.select(); document.execCommand('copy'); done();
+  }
+});
+document.getElementById('btnDownTxt').addEventListener('click',function(){
+  const blob=new Blob(['\ufeff'+document.getElementById('receiptText').value],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='评教回执_'+curCode.slice(-4)+'.txt';
+  a.click(); setTimeout(function(){URL.revokeObjectURL(a.href)},3000);
+});
+
+/* ---------- 汇总 ---------- */
+document.getElementById('btnSum').addEventListener('click',function(){ open('mSum'); });
+document.getElementById('btnCloseSum').addEventListener('click',function(){ close('mSum'); });
+document.getElementById('btnGen').addEventListener('click',function(){
+  const ans=prompt('生成多少个邀请码？（每位学生 1 个，建议比人数多 3～5 个备用）','45');
+  if(ans===null) return;
+  let n=parseInt(ans,10);
+  if(!n || n<1 || n>500){ alert('请输入 1～500 之间的数字'); return; }
+  const set={}; const arr=[];
+  while(arr.length<n){
+    const c=genCode();
+    if(set[c]) continue;
+    set[c]=1; arr.push(c);
+  }
+  document.getElementById('allowBox').value=arr.join('\n');
+  document.getElementById('advBox').open=true;
+  const head='序号,邀请码';
+  const body=arr.map(function(c,i){return (i+1)+','+c}).join('\r\n');
+  dl('学生26-27-1评教_邀请码_'+n+'个.csv', head+'\r\n'+body);
+  const m=document.getElementById('msgSum');
+  m.className='msg ok';
+  m.innerHTML='已生成 <b>'+n+'</b> 个邀请码：已填入下方清单并下载 CSV。一人一个私发，<b>用后即废</b>；清单留底，汇总时会自动剔除名单外的码。';
+});
+document.getElementById('btnClear').addEventListener('click',function(){
+  document.getElementById('pasteBox').value='';
+  if(confirm('同时清空「有效邀请码清单」吗？\n（取消＝保留清单，只清回执）')) document.getElementById('allowBox').value='';
+  document.getElementById('resBox').style.display='none';
+  document.getElementById('expRow').style.display='none';
+  document.getElementById('swipeTip').style.display='none';
+  document.getElementById('msgSum').className='msg';
+});
+
+let agg=null, detail=null;
+function allowBoxRaw(){ return document.getElementById('allowBox').value.trim()!==''; }
+
+document.getElementById('btnCalc').addEventListener('click',function(){
+  const raw=document.getElementById('pasteBox').value;
+  const re=/JX2-([0-9A-Z]{20})-([0-9A-Z])-([A-Z0-9]{5})-([A-Z0-9]{4})/g;
+  const seen={}, codes=[], digits=[], invites=[];
+  let m, dup=0, bad=0, outside=0;
+  const allowTokens=document.getElementById('allowBox').value.toUpperCase().split(/[^A-Z0-9]+/).filter(Boolean);
+  const allowSet={}; let allowCount=0, allowBad=0;
+  allowTokens.forEach(function(t){
+    if(validCode(t)){ if(!allowSet[t]){ allowSet[t]=1; allowCount++; } }
+    else if(t.length>1) allowBad++;
+  });
+  while((m=re.exec(raw))!==null){
+    const invite=m[3].toUpperCase();
+    if(!validCode(invite)){ bad++; continue; }
+    const v = decodeCode(m[1], m[2]);
+    if(!v){ bad++; continue; }
+    if(allowCount && !allowSet[invite]){ outside++; continue; }
+    if(seen[invite]){ dup++; continue; }
+    seen[invite]=1;
+    codes.push('JX2-'+m[1]+'-'+m[2]+'-'+invite+'-'+m[4]);
+    invites.push(invite);
+    digits.push(v);
+  }
+  const msg=document.getElementById('msgSum');
+  if(!digits.length){
+    msg.className='msg warn';
+    msg.textContent='没有识别到有效回执'+(bad?('（'+bad+' 份回执码校验失败，可能被改动或复制不完整）'):'')
+      +(outside?('（'+outside+' 份不在邀请码清单内，已剔除）'):'')+'。请确认粘贴的是完整回执文字（含 JX2- 开头的回执码）。';
+    document.getElementById('resBox').style.display='none';
+    document.getElementById('expRow').style.display='none';
+    return;
+  }
+  const N=TEACHERS.length;
+  const cnt = TEACHERS.map(function(){ return {'90':0,'80':0,'70':0,'60':0,'50':0}; });
+  digits.forEach(function(d){
+    for(let i=0;i<N;i++){
+      if(d[i]>0){ cnt[i][String((d[i]+4)*10)]++; }
+    }
+  });
+  detail = digits.map(function(d,i){
+    return {code:codes[i], invite:invites[i], v:d.map(function(c){return c? (c+4)*10 : 0})};
+  });
+  agg = TEACHERS.map(function(t,i){
+    const c=cnt[i];
+    const votes=c['90']+c['80']+c['70']+c['60']+c['50'];
+    const sum=c['90']*90+c['80']*80+c['70']*70+c['60']*60+c['50']*50;
+    const avg=votes? Math.round(sum/votes*100)/100 : 0;
+    return {i:i, g:t.g, n:t.n, votes:votes, c:c, sum:sum, avg:avg, level:lvName(avg,votes)};
+  });
+  agg.sort(function(a,b){ return b.avg-a.avg || b.sum-a.sum || a.i-b.i; });
+  let prev=null, rank=0;
+  agg.forEach(function(r,k){
+    if(prev===null || r.avg!==prev){ rank=k+1; prev=r.avg; }
+    r.rank = rank;
+  });
+
+  msg.className='msg ok';
+  msg.innerHTML='有效回执 <b>'+digits.length+'</b> 份（一码一票）'
+    +(dup?('｜重复码合并 '+dup+' 份'):'')
+    +(outside?('｜名单外剔除 '+outside+' 份'):'')
+    +(bad?('｜校验失败 '+bad+' 份'):'')
+    +(allowCount?('｜清单内已用 '+digits.length+' / '+allowCount+' 个码'):(allowBoxRaw()?('｜清单无有效码，已按不启用清单处理'):''))
+    +'；参与评分教师 '+agg.filter(function(r){return r.votes>0}).length+' 位。';
+  renderRes();
+  document.getElementById('expRow').style.display='flex';
+  document.getElementById('swipeTip').style.display='block';
+});
+
+function lvName(avg,votes){
+  if(!votes) return '未评';
+  if(avg>=90) return '优秀';
+  if(avg>=80) return '良好';
+  if(avg>=70) return '中';
+  if(avg>=60) return '合格';
+  return '待改进';
+}
+
+function renderRes(){
+  const rows=agg.map(function(r){
+    return '<tr'+(r.rank===1?' class="top1"':'')+'>'+
+      '<td><b>'+r.rank+'</b></td><td class="n">'+r.n+'</td><td>'+r.g+'</td>'+
+      '<td><b>'+r.avg.toFixed(2)+'</b></td><td>'+r.votes+'</td>'+
+      '<td>'+r.c['90']+'</td><td>'+r.c['80']+'</td><td>'+r.c['70']+'</td><td>'+r.c['60']+'</td><td>'+r.c['50']+'</td>'+
+      '<td>'+r.sum+'</td><td>'+r.level+'</td></tr>';
+  }).join('');
+  const box=document.getElementById('resBox');
+  box.innerHTML='<table><thead><tr><th>排名</th><th>教师</th><th>教研组</th><th>总分</th><th>有效票</th><th>90</th><th>80</th><th>70</th><th>60</th><th>50</th><th>总得分</th><th>等级</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  box.style.display='block';
+}
+
+function dl(name, text, type){
+  const blob=new Blob(['\ufeff'+text],{type:type||'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=name; a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href)},3000);
+}
+document.getElementById('btnCsv').addEventListener('click',function(){
+  if(!agg) return;
+  const head='排名,教研组,教师姓名,总分均分,有效票数,90分票数,80分票数,70分票数,60分票数,50分票数,总得分,等级';
+  const body=agg.map(function(r){
+    return [r.rank,r.g,r.n,r.avg.toFixed(2),r.votes,r.c['90'],r.c['80'],r.c['70'],r.c['60'],r.c['50'],r.sum,r.level].join(',');
+  }).join('\r\n');
+  dl('学生26-27-1评教_成绩汇总单_按总分排序.csv', head+'\r\n'+body);
+});
+document.getElementById('btnTsv').addEventListener('click',function(){
+  if(!detail) return;
+  const head=['序号','邀请码','回执编号'].concat(TEACHERS.map(function(t){return t.n})).join('\t');
+  const body=detail.map(function(d,i){
+    return [i+1,d.invite,d.code].concat(d.v.map(function(x){return x||''})).join('\t');
+  }).join('\r\n');
+  dl('投票明细_可粘贴进Excel.tsv', head+'\r\n'+body, 'text/tab-separated-values;charset=utf-8');
+});
+
+paint(); stats();
+</script>
+</body>
+</html>
